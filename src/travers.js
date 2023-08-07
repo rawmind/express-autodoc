@@ -1,9 +1,8 @@
-const { JsModule } = require('./parser/JsModule');
+const { JsModule } = require('./parser/JsModule')
 const { walk } = require('./walker')
-const { parse } = require('path');
-const fs = require('fs');
-
-
+const { parse } = require('path')
+const fs = require('fs')
+const { defaultConfig } = require('./swagger/config')
 
 class ExpressProject {
   constructor(modules) {
@@ -21,8 +20,7 @@ class ExpressProject {
     return this.exportTable[normalized]
   }
 
-  generateSwagger() {
-
+  generateSwagger(swaggerConfig = defaultConfig, outFile) {
     const paths = {}
     this.expressRoutes = []
     this.expressApps.forEach(app => {
@@ -34,8 +32,6 @@ class ExpressProject {
           }
           routerModule.routerEndpoints.forEach(endpoint => {
             const fullPath = (link.path + endpoint.path).replace(/\/\//g, '/')
-
-
             const path = paths[fullPath] || {}
             if (Object.keys(path).length === 0) {
               paths[fullPath] = path
@@ -47,29 +43,15 @@ class ExpressProject {
         }
       })
     })
-
-    const security = [
-      {
-        "ApiKeyAuth": [],
-        "OrgHeader": []
-      }
-    ]
-    const swagger = {
-      host: "localhost",
-      schemes: ["http"],
-      security,
-      paths,
-    }
-
-    const json = JSON.stringify(swagger, null, 2)
-    fs.writeFileSync('swagger_output.json', json)
-    return swagger
+    swaggerConfig.paths = paths
+    const json = JSON.stringify(swaggerConfig, null, 2)
+    fs.writeFileSync(outFile, json)
+    return swaggerConfig
   }
 }
 
-
-exports.generateSwagger = (projectDir, outputFile = 'swagger_output.json') => {
+exports.generateSwagger = (projectDir, config, outputFile = 'swagger_output.json') => {
   const modules = walk(projectDir).map(f => new JsModule(f, projectDir).traverseAst())
   const expressModules = modules.filter(m => m.hasExpress())
-  return new ExpressProject(expressModules).generateSwagger(outputFile)
+  return new ExpressProject(expressModules).generateSwagger(config, outputFile)
 }
