@@ -2,7 +2,7 @@
   "name": "express-autodoc",
   "version": "0.0.2-0",
   "description": "",
-  "main": "src/travers.js",
+  "main": "src/traverse.js",
   "scripts": {
     "test": "eslint --ignore-path .gitignore ."
   },
