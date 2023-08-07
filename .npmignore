@@ -1,0 +1,8 @@
+node_modules
+test
+CODE_OF_CONDUCT.md
+package-lock.json
+swagger_output.json
+.eslintrc.json
+.gitignore
+.vscode/
