@@ -20,6 +20,7 @@ jobs:
       - name: Run jest tests
         id: jest
         run: |
+          npm install
           npm run coverage
         env:
           COMPOSE_DOCKER_CLI_BUILD: 1
