@@ -1,6 +1,6 @@
 {
   "name": "express-autodoc",
-  "version": "0.0.5-0",
+  "version": "0.0.6-0",
   "description": "",
   "main": "src/traverse.js",
   "scripts": {
