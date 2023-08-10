@@ -31,10 +31,22 @@ class RouterEnpointExpression{
     return normalized
   }
 
+
   extractPathParams(path = ''){
     const keys = []
-    pathToRegexp(path, keys)
+    const normalized = this.relaceWildchart(path)
+    pathToRegexp(normalized, keys)
     return keys.map(k => k.name)
+  }
+
+  relaceWildchart(str){
+    return str.split('*').reduce((acc, currentValue, index) => {
+      if (index === 0) {
+        return currentValue;
+      } else {
+        return acc + `{anyStringParam}${index}` + currentValue;
+      }
+    }, '');
   }
 
 }
