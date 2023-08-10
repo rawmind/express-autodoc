@@ -1,4 +1,4 @@
-swagger_output.json
+/swagger_output.json
 node_modules
 swagger_output_test.json
 coverage

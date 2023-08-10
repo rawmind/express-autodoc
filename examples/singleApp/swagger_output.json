@@ -1,0 +1,67 @@
+{
+  "swagger": "2.0",
+  "host": "localhost",
+  "schemes": [
+    "http"
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": [],
+      "OrgHeader": []
+    }
+  ],
+  "paths": {
+    "/api/v1/song/{id}": {
+      "get": {
+        "description": "*\n * Get song by ID\n ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "*\n * Updates a new song\n ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/song/{id}/*": {
+      "put": {
+        "description": "*\n * Insert a new song\n ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
