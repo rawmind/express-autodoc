@@ -1,0 +1,9 @@
+{
+  "verbose": true,
+  "roots": ["test"],
+  "coveragePathIgnorePatterns": [
+        "node_modules",
+        "examples",
+        "config"
+    ]
+}
