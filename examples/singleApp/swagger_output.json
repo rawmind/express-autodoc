@@ -13,7 +13,7 @@
   "paths": {
     "/api/v1/song/{id}": {
       "get": {
-        "description": "*\n * Get song by ID\n ",
+        "description": "Get song by ID",
         "parameters": [
           {
             "name": "id",
@@ -29,7 +29,7 @@
         }
       },
       "post": {
-        "description": "*\n * Updates a new song\n ",
+        "description": "Updates a new song",
         "parameters": [
           {
             "name": "id",
@@ -47,7 +47,7 @@
     },
     "/api/v1/song/{id}/*": {
       "put": {
-        "description": "*\n * Insert a new song\n ",
+        "description": "Insert a new song",
         "parameters": [
           {
             "name": "id",
