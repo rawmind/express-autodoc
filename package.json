@@ -41,6 +41,7 @@
     "@babel/core": "^7.22.9",
     "@babel/parser": "^7.22.7",
     "@babel/traverse": "^7.22.8",
+    "doctrine": "^3.0.0",
     "path-to-regexp": "^6.2.1"
   },
   "devDependencies": {

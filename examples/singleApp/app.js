@@ -5,7 +5,7 @@ const router = express.Router();
 const app = express();
 
 /**
- * Get song by ID
+ * @description Get song by ID
  */
 app.get('/api/v1/song/:id', (_req, res) => (
   res.json({
@@ -15,7 +15,7 @@ app.get('/api/v1/song/:id', (_req, res) => (
 
 
 /**
- * Updates a new song
+ * @description Updates a new song
  */
 app.post('/api/v1/song/:id', (_req, res) => (
   res.json({
@@ -24,7 +24,7 @@ app.post('/api/v1/song/:id', (_req, res) => (
 ));
 
 /**
- * Insert a new song
+ *  @description Insert a new song
  */
 app.put('/api/v1/song/:id/*', (_req, res) => (
   res.json({

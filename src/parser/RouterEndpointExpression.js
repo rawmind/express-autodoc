@@ -1,4 +1,5 @@
 const { pathToRegexp } = require('path-to-regexp')
+const { EndpointDoc } = require('./EndpointDoc')
 class RouterEnpointExpression{
 
   constructor(filename, node, routerVariable){
@@ -6,7 +7,7 @@ class RouterEnpointExpression{
     this.location = node.loc.start
     this.variableName = node?.id?.name
     const caleePropertyName = node.expression?.callee?.property?.name
-    this.comment = this.extractJsDocComments(node)
+    this.documentation = new EndpointDoc(this.extractJsDocComments(node))
     this.method = caleePropertyName
     // todo
     const expressPath = node.expression?.arguments[0].value

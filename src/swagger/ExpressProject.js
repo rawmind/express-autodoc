@@ -48,9 +48,8 @@ function createPath(endpoint, rootPath, paths) {
   if (Object.keys(path).length === 0) {
     paths[fullPath] = path
   }
-  const comment = endpoint.comment.find(() => true) || ''
   path[endpoint.method] = {
-    description: comment,
+    description: endpoint.documentation.description,
     parameters: endpoint.pathParams.map(p => ({ name: p, in: 'path', required: true, type: 'string' })),
     responses: { '200': { description: 'OK' } }
   }

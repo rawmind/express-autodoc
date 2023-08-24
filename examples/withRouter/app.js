@@ -3,7 +3,7 @@ const app = express();
 const songsRouter = require('./songsRouter');
 
 /**
- * Get song by ID
+ * @description Get song by ID
  */
 app.get('/api/v1/song/:id', (_req, res) => (
   res.json({
