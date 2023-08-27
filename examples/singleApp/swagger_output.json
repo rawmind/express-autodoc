@@ -16,6 +16,7 @@
         "description": "Get song by ID",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
@@ -32,6 +33,7 @@
         "description": "Updates a new song",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
@@ -50,6 +52,7 @@
         "description": "Insert a new song",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
