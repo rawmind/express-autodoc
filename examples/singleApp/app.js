@@ -6,6 +6,7 @@ const app = express();
 
 /**
  * @description Get song by ID
+ * @pathParam (:id) The song id
  */
 app.get('/api/v1/song/:id', (_req, res) => (
   res.json({
@@ -16,6 +17,7 @@ app.get('/api/v1/song/:id', (_req, res) => (
 
 /**
  * @description Updates a new song
+ * @pathParam (:id) The song id
  */
 app.post('/api/v1/song/:id', (_req, res) => (
   res.json({
@@ -25,6 +27,7 @@ app.post('/api/v1/song/:id', (_req, res) => (
 
 /**
  *  @description Insert a new song
+ *  @pathParam (:id) The song id
  */
 app.put('/api/v1/song/:id/*', (_req, res) => (
   res.json({

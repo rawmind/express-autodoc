@@ -7,6 +7,7 @@ const router = express.Router();
 
 /**
  * @description Get song by ID (router)
+ * @pathParam (:id) The song id
  */
 router.get('/song/:id', (_req, res) => (
   res.json({
@@ -17,6 +18,7 @@ router.get('/song/:id', (_req, res) => (
 
 /**
  * @description Updates a new song (router)
+ * @pathParam (:id) The song id
  */
 router.post('/song/:id', (_req, res) => (
   res.json({
@@ -26,6 +28,7 @@ router.post('/song/:id', (_req, res) => (
 //extra comment
 /**
  * @description Insert a new song (router)
+ * @pathParam (:id) The song id
  */
 router.put('/song/:id/*', (_req, res) => (
   res.json({

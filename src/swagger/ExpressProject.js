@@ -1,5 +1,6 @@
 const { defaultConfig } = require('./config')
 const fs = require('fs')
+const { SwaggerPathParam, SwaggerEndpointPath } = require('../parser/EndpointDoc')
 const { parse } = require('path')
 
 class ExpressProject {
@@ -44,13 +45,15 @@ class ExpressProject {
 
 function createPath(endpoint, rootPath, paths) {
   const fullPath = (rootPath + endpoint.path).replace(/\/\//g, '/')
-  const path = paths[fullPath] || {}
+  const doc = endpoint.documentation
+  const swaggerPath = new SwaggerEndpointPath(fullPath, doc.extractPathParams(fullPath))
+  const path = paths[swaggerPath.value] || {}
   if (Object.keys(path).length === 0) {
-    paths[fullPath] = path
+    paths[swaggerPath.value] = path
   }
   path[endpoint.method] = {
-    description: endpoint.documentation.description,
-    parameters: endpoint.pathParams.map(p => ({ name: p, in: 'path', required: true, type: 'string' })),
+    description: doc.description,
+    parameters: doc.pathParams.map(p => new SwaggerPathParam(p).value),
     responses: { '200': { description: 'OK' } }
   }
   console.log(`${endpoint.comment} \n ${endpoint.method} ${fullPath}`)

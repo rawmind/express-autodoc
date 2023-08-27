@@ -34,6 +34,7 @@
         "description": "Get song by ID (router)",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
@@ -50,6 +51,7 @@
         "description": "Updates a new song (router)",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
@@ -68,6 +70,7 @@
         "description": "Insert a new song (router)",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
@@ -86,6 +89,7 @@
         "description": "Get song by ID (router)",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
@@ -102,6 +106,7 @@
         "description": "Updates a new song (router)",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
@@ -120,6 +125,7 @@
         "description": "Insert a new song (router)",
         "parameters": [
           {
+            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
