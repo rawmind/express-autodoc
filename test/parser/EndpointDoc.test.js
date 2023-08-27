@@ -1,4 +1,4 @@
-const { EndpointDoc, PathParam, SwaggerPathParam } = require('../../src/parser/EndpointDoc')
+const { EndpointDoc, PathParam, SwaggerPathParam, SwaggerEndpointPath, QueryParam, SwaggerQueryParam } = require('../../src/parser/EndpointDoc')
 
 describe('EndpointDoc', () => {
   it('should read description tag', () => {
@@ -53,4 +53,54 @@ describe('SwaggerPathParam', () => {
     })
   })
 
+})
+
+
+describe('SwaggerEndpointPath', () => {
+    describe('#new', () => {
+      it('should convert to swagger', () => {
+        expect(new SwaggerEndpointPath('/api/v1/song/:id', ['id']).value).toEqual('/api/v1/song/{id}')
+      })
+    })
+
+  })
+
+describe('QueryParam', () => {
+
+  it('should parse tag name', () => {
+    expect(QueryParam.parse('(title)')).toEqual(new QueryParam('title', 'string', false, ''))
+  })
+
+  it('should handle empty queryparam', () => {
+    expect(QueryParam.parse('')).toEqual(undefined)
+  })
+
+  it('should parse queryparam with description', () => {
+    expect(QueryParam.parse('(title) {type: string} some title')).toEqual(new QueryParam('title', 'string', false, 'some title'))
+  })
+
+  it('should parse queryparam with description and required', () => {
+    expect(QueryParam.parse('(title) {type: string, required: true} some title')).toEqual(new QueryParam('title', 'string', true, 'some title'))
+  })
+
+  it('should parse queryparam with type', () => {
+    expect(QueryParam.parse('(title) {type: integer} some title')).toEqual(new QueryParam('title', 'integer', false, 'some title'))
+  })
+})
+
+describe('SwaggerQueryParam', () => {
+
+  describe('#new', () => {
+    it('should convert to swagger', () => {
+      expect(new SwaggerQueryParam(new QueryParam('title', 'string', false, 'some title')).value).toEqual({ name: 'title', in: 'query', required: false, type: 'string', description: 'some title' })
+    })
+
+    it('should convert to swagger with required', () => {
+      expect(new SwaggerQueryParam(new QueryParam('title', 'integer', true, 'some title')).value).toEqual({ name: 'title', in: 'query', required: true, type: 'integer', description: 'some title' })
+    })
+
+    it('should convert to swagger with default type', () => {
+      expect(new SwaggerQueryParam(new QueryParam('title', '', false, 'some title')).value).toEqual({ name: 'title', in: 'query', required: false, type: 'string', description: 'some title' })
+    })
+  })
 })
