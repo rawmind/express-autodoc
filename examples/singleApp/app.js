@@ -5,6 +5,16 @@ const router = express.Router();
 const app = express();
 
 /**
+ * @description Get songs
+ * @queryParam (title) {type: string, required: true, default: Sad but true} The song title
+ */
+app.get('/api/v1/songs', (req, res) => (
+  res.json({
+    title: req.title,
+  })
+));
+
+/**
  * @description Get song by ID
  * @pathParam (:id) The song id
  */

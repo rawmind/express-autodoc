@@ -1,8 +1,10 @@
 {
   "swagger": "2.0",
-  "host": "localhost",
+  "host": "localhost:1234",
+  "info": { "title": "test" },
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "security": [
     {
@@ -16,12 +18,12 @@
         "description": "Get songs",
         "parameters": [
           {
-            "default": "Sad but true",
-            "description": "The song title",
             "name": "title",
             "in": "query",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The song title",
+            "default": "Sad but true"
           }
         ],
         "responses": {
@@ -36,11 +38,11 @@
         "description": "Get song by ID",
         "parameters": [
           {
-            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The song id"
           }
         ],
         "responses": {
@@ -53,11 +55,11 @@
         "description": "Updates a new song",
         "parameters": [
           {
-            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The song id"
           }
         ],
         "responses": {
@@ -72,11 +74,11 @@
         "description": "Insert a new song",
         "parameters": [
           {
-            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The song id"
           }
         ],
         "responses": {
