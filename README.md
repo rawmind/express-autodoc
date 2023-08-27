@@ -2,17 +2,19 @@
 # express-autodoc
 API documentation generator based on jsdoc comments for express
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/9262fd4bab145894b197/maintainability)](https://codeclimate.com/github/rawmind/express-autodoc/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/9262fd4bab145894b197/test_coverage)](https://codeclimate.com/github/rawmind/express-autodoc/test_coverage)
 
 ## Quick start
 
-0. Install
+### Install
 
 ```bash
 
 npm install express-autodoc --save-dev
 ```
 
-1. Add documentation for your Express.js endpoint
+### Add documentation for your Express.js endpoint
 
 ```js
 /**
@@ -28,7 +30,7 @@ app.get('/api/albums/:albumId/songs', (req, res) => (
 ));
 ```
 
-2. Generate swagger mapping
+### Generate swagger mapping
 
 ```bash
 node -e 'require("express-autodoc").generateSwagger(".")'
@@ -43,5 +45,5 @@ node -e 'require("express-autodoc").generateSwagger(".")'
 | @produces         | \<contentType1\>,\<contentTypeN\>                                                     |  `/** @produces application/json */`|                                      |
 | @description      | \<description\>                                                                       | `/** @description A description */`      |
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/9262fd4bab145894b197/maintainability)](https://codeclimate.com/github/rawmind/express-autodoc/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/9262fd4bab145894b197/test_coverage)](https://codeclimate.com/github/rawmind/express-autodoc/test_coverage)
+
+See more examples: [simple app](examples/singleApp/), [app with router](examples/withRouter/)
