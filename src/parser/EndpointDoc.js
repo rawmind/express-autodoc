@@ -15,6 +15,7 @@ class EndpointDoc {
         this.queryParams = this.ast.tags.filter(t => t.title === 'queryParam')
             .map(t => QueryParam.parse(t.description))
         this.pathParams = this.extractPathParams(path).map(paramName => `:${paramName}`).map(paramName => new PathParam(paramName).merge(docParms[paramName]))
+        this.produces = this.ast.tags.filter(t => t.title === 'produces').map(t => new ProducesTag(t.description))
     }
 
     extractPathParams(path = '') {
@@ -52,6 +53,12 @@ class PathParam {
 
     merge(param) {
         return new PathParam(this.name, param?.description || this.description)
+    }
+}
+
+class ProducesTag {
+    constructor(contentTypes) {
+        this.produces = contentTypes?.split(',').map(c => c.trim())
     }
 }
 
@@ -136,3 +143,4 @@ exports.EndpointDoc = EndpointDoc
 exports.SwaggerPathParam = SwaggerPathParam
 exports.SwaggerEndpointPath = SwaggerEndpointPath
 exports.SwaggerQueryParam = SwaggerQueryParam
+exports.ProducesTag = ProducesTag
