@@ -46,4 +46,4 @@ node -e 'require("express-autodoc").generateSwagger(".")'
 | @description      | \<description\>                                                                       | `/** @description A description */`      |
 
 
-See more examples: [simple app](examples/singleApp/), [app with router](examples/withRouter/)
+## See more examples: [simple app](examples/singleApp/), [app with router](examples/withRouter/)
