@@ -16,6 +16,7 @@
     "/api/v1/songs": {
       "get": {
         "description": "Get songs",
+        "produces": ["application/json", "application/xml"],
         "parameters": [
           {
             "name": "title",

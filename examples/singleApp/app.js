@@ -7,6 +7,7 @@ const app = express();
 /**
  * @description Get songs
  * @queryParam (title) {type: string, required: true, default: Sad but true} The song title
+ * @produces application/json, application/xml
  */
 app.get('/api/v1/songs', (req, res) => (
   res.json({

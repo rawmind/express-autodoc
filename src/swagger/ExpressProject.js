@@ -53,10 +53,14 @@ function createPath(endpoint, rootPath, paths) {
   }
   const queryParams = doc.queryParams.map(p => new SwaggerQueryParam(p).value)
   const pathParams = doc.pathParams.map(p => new SwaggerPathParam(p).value)
+  const produces = doc.produces.flatMap(p => p.produces)
   path[endpoint.method] = {
     description: doc.description,
     parameters: pathParams.concat(queryParams),
-    responses: { '200': { description: 'OK' } }
+    responses: { '200': { description: 'OK' } },
+  }
+  if(produces && produces.length > 0){
+    path[endpoint.method].produces = produces
   }
   console.log(`${endpoint.comment} \n ${endpoint.method} ${fullPath}`)
 }
