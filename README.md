@@ -2,12 +2,44 @@
 # express-autodoc
 API documentation generator based on jsdoc comments for express
 
+
+## Quick start
+
+0. Install
+
+```bash
+
+npm install express-autodoc --save-dev
+```
+
+1. Add documentation for your Express.js endpoint
+
+```js
+/**
+ * @description Get songs
+ * @queryParam (title) The song title
+ * @pathParam (:albumId) album UUID
+ * @produces application/json, application/xml
+ */
+app.get('/api/albums/:albumId/songs', (req, res) => (
+  res.json({
+    title: req.title,
+  })
+));
+```
+
+2. Generate swagger mapping
+
+```bash
+node -e 'require("express-autodoc").generateSwagger(".")'
+```
+
 ## Supported tags
 
-| Tag               |      Format                                                                           | Example    |
-|-------------------|:-------------------------------------------------------------------------------------:|-----------:|
-| @queryParam       | (\<name\>) {type: string, required: true, default: \<defaultValue\> } \[description]> | `/** @queryParam (name) A name param */` |
-| @pathParam        |  (\<:name\>)  \<description\>                                                         | `/** @pathParam (:id) song Id */`                                       |
+| Tag               |      Format                                                                           | Example                                  |
+|-------------------|:-------------------------------------------------------------------------------------:|-----------------------------------------:|
+| @queryParam       | (\<name\>) {type: string, required: true, default: \<defaultValue\> } \<description\> | `/** @queryParam (name) A name param */` |
+| @pathParam        |  (\<:name\>)  \<description\>                                                         | `/** @pathParam (:id) song Id */`        |
 | @produces         | \<contentType1\>,\<contentTypeN\>                                                     |  `/** @produces application/json */`|                                      |
 | @description      | \<description\>                                                                       | `/** @description A description */`      |
 
