@@ -36,6 +36,17 @@ app.post('/api/v1/song/:id', (_req, res) => (
   })
 ));
 
+
+/**
+ * @description Updates a new song
+ * @body {"json": "body"}
+ */
+app.post('/api/v1/song-json', (_req, res) => (
+  res.json({
+    title: 'abum 1',
+  })
+));
+
 /**
  *  @description Insert a new song
  *  @pathParam (:id) The song id

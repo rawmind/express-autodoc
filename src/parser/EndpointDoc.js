@@ -5,17 +5,19 @@ class EndpointDoc {
 
     constructor(comments = [], path) {
         this.ast = doctrine.parse(comments.join('\n'), { unwrap: true })
-        this.description = this.ast.tags.find(t => t.title === 'description')?.description || ''
-        const docParms = this.ast.tags.filter(t => t.title === 'pathParam')
+        const tags = this.ast.tags
+        this.description = tags.find(t => t.title === 'description')?.description || ''
+        const docParms = tags.filter(t => t.title === 'pathParam')
             .map(t => PathParam.parse(t.description))
             .reduce((acc, p) => {
                 acc[p.name] = p
                 return acc
             }, {})
-        this.queryParams = this.ast.tags.filter(t => t.title === 'queryParam')
+        this.queryParams = tags.filter(t => t.title === 'queryParam')
             .map(t => QueryParam.parse(t.description))
+        this.body = tags.find(t => t.title === 'body')?.description
         this.pathParams = this.extractPathParams(path).map(paramName => `:${paramName}`).map(paramName => new PathParam(paramName).merge(docParms[paramName]))
-        this.produces = this.ast.tags.filter(t => t.title === 'produces').map(t => new ProducesTag(t.description))
+        this.produces = tags.filter(t => t.title === 'produces').map(t => new ProducesTag(t.description))
     }
 
     extractPathParams(path = '') {
@@ -107,6 +109,13 @@ class SwaggerPathParam {
     }
 }
 
+class SwaggerBody{
+
+    constructor(body){
+        this.value = {in: 'body', name: 'body', required: true, schema: {type: 'object', example: body}}
+    }
+}
+
 class SwaggerEndpointPath {
 
     constructor(path, pathParams) {
@@ -144,3 +153,4 @@ exports.SwaggerPathParam = SwaggerPathParam
 exports.SwaggerEndpointPath = SwaggerEndpointPath
 exports.SwaggerQueryParam = SwaggerQueryParam
 exports.ProducesTag = ProducesTag
+exports.SwaggerBody = SwaggerBody
