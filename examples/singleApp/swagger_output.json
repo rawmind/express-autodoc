@@ -32,6 +32,27 @@
         }
       }
     },
+    "/api/v1/song-json": {
+      "post":{
+        "description": "Updates a new song",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "example": "{\"json\": \"body\"}"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/v1/song/{id}": {
       "get": {
         "description": "Get song by ID",
