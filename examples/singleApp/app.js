@@ -48,7 +48,7 @@ app.post('/api/v1/song-json', (_req, res) => (
 ));
 
 /**
- *  @description Insert a new song
+ *  @description Updates a new song
  *  @pathParam (:id) The song id
  */
 app.put('/api/v1/song/:id/*', (_req, res) => (
@@ -56,5 +56,36 @@ app.put('/api/v1/song/:id/*', (_req, res) => (
     title: 'abum 1',
   })
 ));
+
+/**
+ *  @description Partial updates for a song
+ *  @pathParam (:id) The song id
+ */
+app.patch('/api/v1/song/:id/*', (_req, res) => (
+  res.json({
+    title: 'abum 1',
+  })
+));
+
+/**
+ *  @description Some other stuff (trace)
+ *  @pathParam (:id) The song id
+ */
+app.trace('/api/v1/song/:id/*', (_req, res) => (
+  res.json({
+    title: 'abum 1',
+  })
+));
+
+/**
+ *  @description Some other stuff (head)
+ *  @pathParam (:id) The song id
+ */
+app.head('/api/v1/song/:id/*', (_req, res) => (
+  res.json({
+    title: 'abum 1',
+  })
+));
+
 
 module.exports = app;
