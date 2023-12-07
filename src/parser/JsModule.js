@@ -9,6 +9,7 @@ const { RouterLink } = require('./RouterLink')
 const path = require('path');
 const { ExpressInstance } = require('./ExpressInstance');
 const { LocalImport } = require('./LocalImport');
+const VERBS = ['get', 'post', 'put', 'delete', 'patch', 'head', 'options', 'trace']
 
 class JsModule {
 
@@ -96,7 +97,7 @@ class JsModule {
           const expressionCalleeObjName = node.expression?.callee?.object?.name
 
           // app.put('/api/v1/song/:id/*', (_req, res) => ());
-          if (['get', 'post', 'put', 'delete'].includes(caleePropertyName)) {
+          if (VERBS.includes(caleePropertyName)) {
             const variable = findVariable(expressionCalleeObjName)
             if (variable) {
               routerEndpoints.push(new RouterEnpointExpression(filename, node, variable))
