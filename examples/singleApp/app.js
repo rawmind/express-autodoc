@@ -87,5 +87,15 @@ app.head('/api/v1/song/:id/*', (_req, res) => (
   })
 ));
 
+/**
+ * @description Updates a new song
+ * @body #/definitions/Song
+ */
+app.post('/api/v3/song-json', (_req, res) => (
+  res.json({
+    title: 'abum 1',
+  })
+));
+
 
 module.exports = app;
