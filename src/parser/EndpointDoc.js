@@ -109,10 +109,15 @@ class SwaggerPathParam {
     }
 }
 
-class SwaggerBody{
+class SwaggerBody {
 
-    constructor(body){
-        this.value = {in: 'body', name: 'body', required: true, schema: {type: 'object', example: body}}
+    constructor(body) {
+        if (body.startsWith('{')) {
+            this.value = { in: 'body', name: 'body', required: true, schema: { type: 'object', example: body } }
+        } else {
+            this.value = { in: 'body', name: 'body', required: true, schema: { $ref: body } }
+        }
+
     }
 }
 

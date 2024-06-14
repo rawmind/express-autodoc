@@ -1,11 +1,23 @@
 {
   "swagger": "2.0",
   "host": "localhost:1234",
-  "info": { "title": "test" },
+  "info": {
+    "title": "test"
+  },
   "schemes": [
     "http",
     "https"
   ],
+  "definitions": {
+    "Song": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        }
+      }
+    }
+  },
   "security": [
     {
       "ApiKeyAuth": [],
@@ -16,7 +28,10 @@
     "/api/v1/songs": {
       "get": {
         "description": "Get songs",
-        "produces": ["application/json", "application/xml"],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
         "parameters": [
           {
             "name": "title",
@@ -35,7 +50,7 @@
       }
     },
     "/api/v1/song-json": {
-      "post":{
+      "post": {
         "description": "Updates a new song",
         "parameters": [
           {
@@ -152,6 +167,26 @@
             "required": true,
             "type": "string",
             "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v3/song-json": {
+      "post": {
+        "description": "Updates a new song",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Song"
+            }
           }
         ],
         "responses": {

@@ -44,6 +44,6 @@ node -e 'require("express-autodoc").generateSwagger(".")'
 | @pathParam        |  (\<:name\>)  \<description\>                                                         | `/** @pathParam (:id) song Id */`        |
 | @produces         | \<contentType1\>,\<contentTypeN\>                                                     |  `/** @produces application/json */`|                                      |
 | @description      | \<description\>                                                                       | `/** @description A description */`      |
-
+| @body             | \<body\> [{"example": "object"} |<reference>]                                        | `/** @body {} */` `/** @body #definitions/Song */` |
 
 ### See more examples: [simple app](examples/singleApp/), [app with router](examples/withRouter/)

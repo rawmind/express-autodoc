@@ -14,15 +14,54 @@
     "/api/v1/songs": {
       "get": {
         "description": "Get songs",
-        "produces": ["application/json", "application/xml"],
         "parameters": [
           {
-            "default": "Sad but true",
-            "description": "The song title",
             "name": "title",
             "in": "query",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The song title",
+            "default": "Sad but true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      }
+    },
+    "/api/v1/song/{id}": {
+      "get": {
+        "description": "Get song by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "Updates a new song",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The song id"
           }
         ],
         "responses": {
@@ -33,7 +72,7 @@
       }
     },
     "/api/v1/song-json": {
-      "post":{
+      "post": {
         "description": "Updates a new song",
         "parameters": [
           {
@@ -53,52 +92,16 @@
         }
       }
     },
-    "/api/v1/song/{id}": {
-      "get": {
-        "description": "Get song by ID",
-        "parameters": [
-          {
-            "description": "The song id",
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "description": "Updates a new song",
-        "parameters": [
-          {
-            "description": "The song id",
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/v1/song/{id}/*": {
       "put": {
         "description": "Updates a new song",
         "parameters": [
           {
-            "description": "The song id",
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The song id"
           }
         ],
         "responses": {
@@ -150,6 +153,26 @@
             "required": true,
             "type": "string",
             "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v3/song-json": {
+      "post": {
+        "description": "Updates a new song",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Song"
+            }
           }
         ],
         "responses": {

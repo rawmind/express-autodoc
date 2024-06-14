@@ -9,6 +9,16 @@ describe('#generateSwagger', () => {
       const customConfig ={
         swagger: "2.0",
         host: "localhost:1234",
+        definitions: {
+          "Song": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              }
+            }
+          }
+        },
         info: { "title": "test" },
         schemes: ["http", "https"],
         security: [

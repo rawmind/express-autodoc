@@ -1,5 +1,5 @@
 const { EndpointDoc } = require('./EndpointDoc')
-class RouterEnpointExpression{
+class RouterEndpointExpression{
 
   constructor(filename, node, routerVariable){
     this.filename = filename
@@ -20,4 +20,4 @@ class RouterEnpointExpression{
 
 }
 
-exports.RouterEnpointExpression = RouterEnpointExpression
+exports.RouterEnpointExpression = RouterEndpointExpression
