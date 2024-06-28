@@ -43,7 +43,8 @@ node -e 'require("express-autodoc").generateSwagger(".")'
 | @queryParam       | (\<name\>) {type: string, required: true, default: \<defaultValue\> } \<description\> | `/** @queryParam (name) A name param */` |
 | @pathParam        |  (\<:name\>)  \<description\>                                                         | `/** @pathParam (:id) song Id */`        |
 | @produces         | \<contentType1\>,\<contentTypeN\>                                                     |  `/** @produces application/json */`|                                      |
-| @description      | \<description\>                                                                       | `/** @description A description */`      |
-| @body             | \<body\> [{"example": "object"} |<reference>]                                        | `/** @body {} */` `/** @body #definitions/Song */` |
+| @description      | \<description\>                                                                       | `/** @description A description */`                |
+| @body, @request             | \<body\> [{"example": "object"} |<reference>]                               | `/** @body {} */` `/** @body #definitions/Song */` |
+| @response             | \<response\> [{"example": "object"} |<reference>]                                 | `/** @response {} */` `/** @response #definitions/Song */` |
 
 ### See more examples: [simple app](examples/singleApp/), [app with router](examples/withRouter/)

@@ -90,6 +90,7 @@ app.head('/api/v1/song/:id/*', (_req, res) => (
 /**
  * @description Updates a new song
  * @body #/definitions/Song
+ * @response #/definitions/Song
  */
 app.post('/api/v3/song-json', (_req, res) => (
   res.json({

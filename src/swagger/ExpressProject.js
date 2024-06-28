@@ -1,6 +1,6 @@
 const { defaultConfig } = require('./config')
 const fs = require('fs')
-const { SwaggerPathParam, SwaggerEndpointPath, SwaggerQueryParam, SwaggerBody } = require('../parser/EndpointDoc')
+const { SwaggerPathParam, SwaggerEndpointPath, SwaggerQueryParam, SwaggerBody, SwaggerResponse } = require('../parser/EndpointDoc')
 const { parse } = require('path')
 
 class ExpressProject {
@@ -56,10 +56,12 @@ function createPath(endpoint, rootPath, paths) {
   const produces = doc.produces.flatMap(p => p.produces)
   const body = doc.body
   const bodyParams = body ? [new SwaggerBody(body).value] : []
+  const response = doc.response
+  const responseBody = response ? new SwaggerResponse(response).value : {}
   path[endpoint.method] = {
     description: doc.description,
     parameters: pathParams.concat(queryParams).concat(bodyParams),
-    responses: { '200': { description: 'OK' } },
+    responses: { '200': { description: 'OK', ...responseBody } },
   }
   if(produces && produces.length > 0){
     path[endpoint.method].produces = produces
