@@ -177,7 +177,11 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "content": "application/json",
+            "description": "OK",
+            "schema": {
+                   "$ref": "#/definitions/Song"
+            }
           }
         }
       }

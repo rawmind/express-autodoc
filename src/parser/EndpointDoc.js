@@ -15,7 +15,8 @@ class EndpointDoc {
             }, {})
         this.queryParams = tags.filter(t => t.title === 'queryParam')
             .map(t => QueryParam.parse(t.description))
-        this.body = tags.find(t => t.title === 'body')?.description
+        this.body = tags.find(t => t.title === 'body' || t.title == 'request')?.description
+        this.response = tags.find(t => t.title === 'response')?.description
         this.pathParams = this.extractPathParams(path).map(paramName => `:${paramName}`).map(paramName => new PathParam(paramName).merge(docParms[paramName]))
         this.produces = tags.filter(t => t.title === 'produces').map(t => new ProducesTag(t.description))
     }
@@ -121,6 +122,17 @@ class SwaggerBody {
     }
 }
 
+class SwaggerResponse {
+
+    constructor(body, contentType = 'application/json') {
+        if (body.startsWith('{')) {
+            this.value = { content: contentType, schema: { type: 'object', example: body } }
+        } else {
+            this.value = { content: contentType, schema: { $ref: body } }
+        }
+    }
+}
+
 class SwaggerEndpointPath {
 
     constructor(path, pathParams) {
@@ -159,3 +171,4 @@ exports.SwaggerEndpointPath = SwaggerEndpointPath
 exports.SwaggerQueryParam = SwaggerQueryParam
 exports.ProducesTag = ProducesTag
 exports.SwaggerBody = SwaggerBody
+exports.SwaggerResponse = SwaggerResponse
