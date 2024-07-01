@@ -1,7 +1,7 @@
-const { defaultConfig } = require('./config')
 const fs = require('fs')
-const { SwaggerPathParam, SwaggerEndpointPath, SwaggerQueryParam, SwaggerBody, SwaggerResponse } = require('../parser/EndpointDoc')
-const { parse } = require('path')
+const { Swagger2 } = require('./Swagger2')
+const { OpenApi3 } = require('./OpenApi3')
+const { defaultConfig } = require('./config')
 
 class ExpressProject {
   constructor(modules) {
@@ -13,60 +13,22 @@ class ExpressProject {
     }, {})
   }
 
-  findRoute(path) {
-    const parsed = parse(path)
-    const normalized = `${parsed.dir}/${parsed.name}`
-    return this.exportTable[normalized]
-  }
-
   generateSwagger(swaggerConfig = defaultConfig, outFile) {
-    const paths = {}
+    let product = swaggerConfig
     this.expressRoutes = []
-    this.expressApps.forEach(app => {
-      const rootPath = '/'
-      app.routerEndpoints.forEach(endpoint => createPath(endpoint, rootPath, paths))
-      app.routerLinks.forEach(link => {
-        if (link.routerVariable) {
-          const routerModule = this.findRoute(link.routerVariable.importPath)
-          if (!routerModule) {
-            return
-          }
-          const rootPath = link.path
-          routerModule.routerEndpoints.forEach(endpoint => createPath(endpoint, rootPath, paths))
-        }
-      })
-    })
-    swaggerConfig.paths = paths
-    const json = JSON.stringify(swaggerConfig, null, 2)
+    if (this.#isOpenApi2(product)) {
+      product = new Swagger2(swaggerConfig, this.exportTable).generate(this.expressApps, this.exportTable)
+    } else {
+      product = new OpenApi3(swaggerConfig, this.exportTable).generate(this.expressApps, this.exportTable)
+    }
+    const json = JSON.stringify(product, null, 2)
     fs.writeFileSync(outFile, json)
-    return swaggerConfig
+    return product
   }
-}
 
-function createPath(endpoint, rootPath, paths) {
-  const fullPath = (rootPath + endpoint.path).replace(/\/\//g, '/')
-  const doc = endpoint.documentation
-  const swaggerPath = new SwaggerEndpointPath(fullPath, doc.extractPathParams(fullPath))
-  const path = paths[swaggerPath.value] || {}
-  if (Object.keys(path).length === 0) {
-    paths[swaggerPath.value] = path
+  #isOpenApi2(config) {
+    return config?.swagger === '2.0'
   }
-  const queryParams = doc.queryParams.map(p => new SwaggerQueryParam(p).value)
-  const pathParams = doc.pathParams.map(p => new SwaggerPathParam(p).value)
-  const produces = doc.produces.flatMap(p => p.produces)
-  const body = doc.body
-  const bodyParams = body ? [new SwaggerBody(body).value] : []
-  const response = doc.response
-  const responseBody = response ? new SwaggerResponse(response).value : {}
-  path[endpoint.method] = {
-    description: doc.description,
-    parameters: pathParams.concat(queryParams).concat(bodyParams),
-    responses: { '200': { description: 'OK', ...responseBody } },
-  }
-  if(produces && produces.length > 0){
-    path[endpoint.method].produces = produces
-  }
-  console.log(`${endpoint.comment} \n ${endpoint.method} ${fullPath}`)
 }
 
 exports.ExpressProject = ExpressProject

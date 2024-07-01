@@ -88,6 +88,7 @@ app.head('/api/v1/song/:id/*', (_req, res) => (
 ));
 
 /**
+ * @operationId updateSong
  * @description Updates a new song
  * @body #/definitions/Song
  * @response #/definitions/Song

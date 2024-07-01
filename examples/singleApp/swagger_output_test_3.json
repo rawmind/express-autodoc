@@ -1,0 +1,206 @@
+{
+  "openapi": "3.0",
+  "host": "localhost:1234",
+  "components": {
+    "Song": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "test"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": [],
+      "OrgHeader": []
+    }
+  ],
+  "paths": {
+    "/api/v1/songs": {
+      "get": {
+        "description": "Get songs",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The song title",
+            "default": "Sad but true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/song/{id}": {
+      "get": {
+        "description": "Get song by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "Updates a new song",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/song-json": {
+      "post": {
+        "description": "Updates a new song",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": "{\"json\": \"body\"}"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/api/v1/song/{id}/*": {
+      "put": {
+        "description": "Updates a new song",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "description": "Partial updates for a song",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "trace": {
+        "description": "Some other stuff (trace)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "head": {
+        "description": "Some other stuff (head)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The song id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v3/song-json": {
+      "post": {
+        "description": "Updates a new song",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Song"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Song"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "updateSong"
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ class EndpointDoc {
         this.ast = doctrine.parse(comments.join('\n'), { unwrap: true })
         const tags = this.ast.tags
         this.description = tags.find(t => t.title === 'description')?.description || ''
+        this.operationId = tags.find(t => t.title === 'operationId')?.description
         const docParms = tags.filter(t => t.title === 'pathParam')
             .map(t => PathParam.parse(t.description))
             .reduce((acc, p) => {
@@ -101,10 +102,16 @@ class QueryParam {
 
 class SwaggerPathParam {
 
-    constructor(pathParam) {
-        const pathTag = { name: pathParam.name.replace(':', ''), in: 'path', required: true, type: 'string' }
+    constructor(pathParam, majorVersion = 2) {
+        const pathTag = { name: pathParam.name.replace(':', ''), in: 'path', required: true }
         if (pathParam.description) {
             pathTag.description = pathParam.description
+        }
+        if (majorVersion === 3) {
+            pathTag.schema = { type: 'string' }
+        }
+        if (majorVersion === 2) {
+            pathTag.type = 'string'
         }
         this.value = pathTag
     }
@@ -112,23 +119,43 @@ class SwaggerPathParam {
 
 class SwaggerBody {
 
-    constructor(body) {
-        if (body.startsWith('{')) {
-            this.value = { in: 'body', name: 'body', required: true, schema: { type: 'object', example: body } }
-        } else {
-            this.value = { in: 'body', name: 'body', required: true, schema: { $ref: body } }
+    constructor(body, majorVersion = 2, contentType = 'application/json') {
+        if (majorVersion === 2) {
+            if (body.startsWith('{')) {
+                this.value = { in: 'body', name: 'body', required: true, schema: { type: 'object', example: body } }
+            } else {
+                this.value = { in: 'body', name: 'body', required: true, schema: { $ref: body } }
+            }
         }
-
+        if (majorVersion === 3) {
+            const requestBody = { content: {}, required: true }
+            if (body.startsWith('{')) {
+                requestBody.content[contentType] = { schema: { type: 'object', example: body } }
+                this.value = requestBody
+            } else {
+                requestBody.content[contentType] = { schema: { $ref: body } }
+                this.value = requestBody
+            }
+        }
     }
 }
 
 class SwaggerResponse {
 
-    constructor(body, contentType = 'application/json') {
-        if (body.startsWith('{')) {
-            this.value = { content: contentType, schema: { type: 'object', example: body } }
-        } else {
-            this.value = { content: contentType, schema: { $ref: body } }
+    constructor(body, majorVersion = 2, contentType = 'application/json') {
+        if (majorVersion === 2) {
+            if (body.startsWith('{')) {
+                this.value = { content: contentType, schema: { type: 'object', example: body } }
+            } else {
+                this.value = { content: contentType, schema: { $ref: body } }
+            }
+        }
+        if (majorVersion === 3) {
+            if (body.startsWith('{')) {
+                this.value = { content: { 'application/json': { schema: { type: 'object', example: body } } } }
+            } else {
+                this.value = { content: { 'application/json': { schema: { $ref: body } } } }
+            }
         }
     }
 }
@@ -151,12 +178,16 @@ class SwaggerEndpointPath {
 
 class SwaggerQueryParam {
 
-    constructor(queryParam) {
-        const pathTag = { name: queryParam.name, in: 'query', required: queryParam.required, type: queryParam.type }
+    constructor(queryParam, majorVersion = 2) {
+        const pathTag = { name: queryParam.name, in: 'query', required: queryParam.required}
         if (queryParam.description) {
             pathTag.description = queryParam.description
         }
-        if (queryParam.defaultValue) {
+        if (majorVersion === 3) {
+            pathTag.schema = { type: queryParam.type, default: queryParam.defaultValue }
+        }
+        if (majorVersion === 2) {
+            pathTag.type = queryParam.type
             pathTag.default = queryParam.defaultValue
         }
         this.value = pathTag
