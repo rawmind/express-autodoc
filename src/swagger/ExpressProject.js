@@ -27,7 +27,7 @@ class ExpressProject {
   }
 
   #isOpenApi2(config) {
-    return config.swagger === '2.0'
+    return config?.swagger === '2.0'
   }
 }
 

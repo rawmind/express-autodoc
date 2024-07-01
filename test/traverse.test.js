@@ -32,7 +32,7 @@ describe('#generateSwagger', () => {
 
     it('should apply a custom config and return swagger output for 3.0', () => {
       const customConfig ={
-        swagger: "3.0",
+        openapi: "3.0",
         host: "localhost:1234",
         components: {
           "Song": {

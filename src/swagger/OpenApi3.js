@@ -5,7 +5,8 @@ const { parse } = require('path')
 class OpenApi3 {
   constructor(config, exportTable) {
     assert(config, 'requires a config object')
-    assert(config.swagger.startsWith('3.'), 'only supports version 3.x')
+    assert(config.openapi, 'requires an openapi version')
+    assert(config.openapi.startsWith('3.'), 'only supports version 3.x')
     this.config = config;
     this.exportTable = exportTable
   }
@@ -46,17 +47,23 @@ class OpenApi3 {
     if (Object.keys(path).length === 0) {
       paths[swaggerPath.value] = path
     }
-    const queryParams = doc.queryParams.map(p => new SwaggerQueryParam(p).value)
-    const pathParams = doc.pathParams.map(p => new SwaggerPathParam(p).value)
+    const queryParams = doc.queryParams.map(p => new SwaggerQueryParam(p, 3).value)
+    const pathParams = doc.pathParams.map(p => new SwaggerPathParam(p, 3).value)
     const body = doc.body
-    const bodyParams = body ? [new SwaggerBody(body).value] : []
     const response = doc.response
-    const responseBody = response ? new SwaggerResponse(response).value : {}
+    const responseBody = response ? new SwaggerResponse(response, 3).value : {}
     path[endpoint.method] = {
       description: doc.description,
-      parameters: pathParams.concat(queryParams).concat(bodyParams),
-      // add content type
+      parameters: pathParams.concat(queryParams),
+      // todo: add content type
       responses: { '200': { description: 'OK', ...responseBody} },
+    }
+    if(body) {
+      path[endpoint.method].requestBody = new SwaggerBody(body, 3).value
+    }
+    const operationId = doc.operationId
+    if(operationId) {
+      path[endpoint.method].operationId = operationId
     }
     console.log(`${endpoint.method} ${fullPath}`)
   }

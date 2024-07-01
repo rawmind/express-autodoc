@@ -5,7 +5,8 @@ const { parse } = require('path')
 class Swagger2 {
   constructor(config, exportTable) {
     assert(config, 'Swagger2 requires a config object')
-    assert(config.swagger === '2.0', 'Swagger2 only supports version 2.0')
+    assert(config.swagger, 'requires an swagger version')
+    assert(config.swagger === '2.0', 'only supports version 2.0')
     this.config = config;
     this.exportTable = exportTable
   }
