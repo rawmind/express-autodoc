@@ -66,7 +66,6 @@ function createPath(endpoint, rootPath, paths) {
   if(produces && produces.length > 0){
     path[endpoint.method].produces = produces
   }
-  console.log(`${endpoint.comment} \n ${endpoint.method} ${fullPath}`)
 }
 
 exports.ExpressProject = ExpressProject
