@@ -1,5 +1,9 @@
 name: Tests CI
 
+permissions:
+  contents: read
+  id-token: write
+
 on:
   workflow_dispatch:
   push:
