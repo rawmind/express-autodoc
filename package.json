@@ -1,6 +1,6 @@
 {
   "name": "express-autodoc",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "src/traverse.js",
   "scripts": {
@@ -42,7 +42,7 @@
     "@babel/parser": "^7.22.7",
     "@babel/traverse": "^7.22.8",
     "doctrine": "^3.0.0",
-    "path-to-regexp": "^6.2.1"
+    "path-to-regexp": "^6.3.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.3",
