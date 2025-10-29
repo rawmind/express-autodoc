@@ -15,6 +15,8 @@ class JsModule {
 
   #ast = null
   #localImports = []
+  #hasExpressWord = false
+  #code = null
 
   get localImports() {
     return this.#localImports
@@ -24,12 +26,21 @@ class JsModule {
     this.filename = filename
     const parsed = path.parse(filename)
     this.alias = `.${parsed.dir}/${parsed.name}`.replace(rootDir, '')
-    const code = fs.readFileSync(filename, 'utf8')
-    const ast = parseSync(code, { sourceType: 'module' })
-    this.#ast = ast
+    this.#code = fs.readFileSync(filename, 'utf8')
+    this.#hasExpressWord = this.#code.includes('express')
+  }
+
+  #preloadAst() {
+    if (!this.#ast) {
+      this.#ast = parseSync(this.#code, { sourceType: 'module' })
+      console.log("Parsed AST for ", this.filename)
+      this.#code = null
+    }
+    return this.#ast
   }
 
   traverseAst() {
+    this.#preloadAst()
     const filename = this.filename
     const imports = []
     const routerInstances = []
@@ -146,11 +157,11 @@ class JsModule {
   }
 
   hasExpress(){
-    return this.expressInstances.length > 0 || this.routerInstances.length > 0
+    return this.#hasExpressWord && (this.traverseAst() && (this.expressInstances.length > 0 || this.routerInstances.length > 0) )
   }
 
   isExpressApp(){
-    return this.expressInstances.length > 0
+    return this.#hasExpressWord && (this.traverseAst() && this.expressInstances.length > 0)
   }
 
 }
