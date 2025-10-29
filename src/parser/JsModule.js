@@ -33,7 +33,6 @@ class JsModule {
   #preloadAst() {
     if (!this.#ast) {
       this.#ast = parseSync(this.#code, { sourceType: 'module' })
-      console.log("Parsed AST for ", this.filename)
       this.#code = null
     }
     return this.#ast
